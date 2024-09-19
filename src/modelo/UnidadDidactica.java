@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package reto0_adt;
+package modelo;
 
 /**
  *
@@ -62,5 +62,11 @@ public class UnidadDidactica {
         return "UnidadDidactica{" + "id=" + id + ", acronimo=" + acronimo + ", titulo=" + titulo + ", evaluacion=" + evaluacion + ", descripcion=" + descripcion + '}';
     }
     
+    public void setDatos( ){
+        this.acronimo = utilidades.Utilidades.introducirCadena("introduce un acronimo");
+        this.titulo = utilidades.Utilidades.introducirCadena("introduce un titulo");
+        this.evaluacion = utilidades.Utilidades.introducirCadena("introduce una evaluacion");
+        this.descripcion = utilidades.Utilidades.introducirCadena("introduce una descripcion");
+    }
     
 }
