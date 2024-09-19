@@ -1,31 +1,34 @@
 CREATE DATABASE examendb;
+
 USE examendb;
-CREATE TABLE UnidadDidactica (
-ID INTEGER PRIMARY KEY,
-ACRONIMO VARCHAR(20),
-TITULO VARCHAR(20),
-EVALUACION VARCHAR(20),
-DESCRIPCION VARCHAR(20)
+
+CREATE TABLE UnidadDidactica(
+id Integer primary key,
+acronimo varchar(20),
+titulo varchar(30),
+evaluacion varchar(20),
+descripcion varchar(100));
+
+CREATE TABLE Enunciado(
+id Integer primary key,
+descripcion varchar(100),
+nivel enum("ALTA","MEDIA","BAJA"),
+disponible boolean
 );
-CREATE TABLE ConvocatoriaExamen (
-CONVOCATORIA VARCHAR(20) PRIMARY KEY,
-DESCRIPCION VARCHAR(20),
-FECHA DATE,
-CURSO VARCHAR(20)
+
+CREATE TABLE ConvocatoriaExamen(
+convocatoria varchar(20) primary key,
+descripcion varchar(100),
+fecha Date,
+curso varchar(20),
+id Integer,
+foreign key (id) references Enunciado(id) on delete cascade
 );
-CREATE TABLE Eunciado (
-ID INTEGER PRIMARY KEY,
-DESCRIPCION VARCHAR(20),
-NIVEL ENUM("ALTA","MEDIA","BAJA"),
-DISPONIBLE BOOLEAN,
-RUTA VARCHAR(20),
-CONVOCATORIA VARCHAR(20),
-FOREIGN KEY (CONVOCATORIA) REFERENCES ConvocatoriaExamen(CONVOCATORIA) ON DELETE CASCADE
-);
-CREATE TABLE EnunciadoUnidad (
-ID_ENUNCIADO INTEGER,
-ID_UNIDAD INTEGER,
-PRIMARY KEY (ID_ENUNCIADO,ID_UNIDAD),
-FOREIGN KEY (ID_UNIDAD) REFERENCES UnidadDidactica(ID) ON DELETE CASCADE,
-FOREIGN KEY (ID_ENUNCIADO) REFERENCES Eunciado(ID) ON DELETE CASCADE
+
+CREATE TABLE UnidadEnunciado(
+id_unidad Integer,
+id_enunciado Integer,
+primary key(id_unidad, id_enunciado),
+foreign key (id_unidad) references UnidadDidactica(id) on delete cascade,
+foreign key (id_enunciado) references Enunciado(id) on delete cascade
 );
