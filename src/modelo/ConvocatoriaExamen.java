@@ -51,6 +51,7 @@ public class ConvocatoriaExamen {
         this.curso = curso;
     }
 
+
     public Integer getId() {
         return id;
     }
@@ -59,18 +60,19 @@ public class ConvocatoriaExamen {
         this.id = id;
     }
     
-    
 
     @Override
     public String toString() {
         return "ConvocatoriaExamen{" + "convocatoria=" + convocatoria + ", descripcion=" + descripcion + ", fecha=" + fecha + ", curso=" + curso + '}';
     }
     
+
     public void setDatos( ){
         this.convocatoria = utilidades.Utilidades.introducirCadena("introduce la convocatoria");
         this.descripcion = utilidades.Utilidades.introducirCadena("introduce una descripcion");
         this.fecha = utilidades.Utilidades.pidoFechaDMA("introduce la fecha");
         this.curso = utilidades.Utilidades.introducirCadena("introduce el curso");
     }
+
     
 }
