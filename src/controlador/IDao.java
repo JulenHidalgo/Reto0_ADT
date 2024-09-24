@@ -22,19 +22,15 @@ public interface IDao {
     
     public void altaEnunciado(Enunciado enunciado);
     
-    public void altaUnidadEnunciado(List<Integer> idUnidad);
-    
-    public void putEnunciadoInConvocatoria(String convocatoria);
+    public void altaUnidadEnunciado(List<Integer> idUnidade, Integer idEnunciado);
     
     public List<UnidadDidactica> getUnidades();
-    
-    public List<ConvocatoriaExamen> getConvocatorias();
     
     public List<Enunciado> getEnunciados();
     
     public List<Enunciado> getEnunciadosUnidad(Integer idUnidad);
     
-    public List<ConvocatoriaExamen> getConvocatoriasEnunciado(Integer Enunciado);
+    public List<ConvocatoriaExamen> getConvocatoriasEnunciado(Integer enunciado);
     
    public List<ConvocatoriaExamen> getConvocatoriasSinEnunciado();
    

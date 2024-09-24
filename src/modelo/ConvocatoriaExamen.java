@@ -5,7 +5,7 @@
  */
 package modelo;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
@@ -15,7 +15,7 @@ public class ConvocatoriaExamen {
     
     private String convocatoria;
     private String descripcion;
-    private LocalDate fecha;
+    private Date fecha;
     private String curso;
     private Integer id;
     
@@ -35,11 +35,11 @@ public class ConvocatoriaExamen {
         this.descripcion = descripcion;
     }
 
-    public LocalDate getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
