@@ -12,7 +12,7 @@ package modelo;
 public class Enunciado {
     
     private Integer id;
-    private String acronimo;
+    private String descripcion;
     private Dificultad nivel;
     private boolean disponible;
     private String ruta;
@@ -25,12 +25,12 @@ public class Enunciado {
         this.id = id;
     }
 
-    public String getAcronimo() {
-        return acronimo;
+    public String getdescripcion() {
+        return descripcion;
     }
 
-    public void setAcronimo(String acronimo) {
-        this.acronimo = acronimo;
+    public void setdescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Dificultad getNivel() {
@@ -59,8 +59,15 @@ public class Enunciado {
 
     @Override
     public String toString() {
-        return "Enunciado{" + "id=" + id + ", acronimo=" + acronimo + ", nivel=" + nivel + ", disponible=" + disponible + ", ruta=" + ruta + '}';
+        return "Enunciado{" + "id=" + id + ", acronimo=" + descripcion+ ", nivel=" + nivel + ", disponible=" + disponible + ", ruta=" + ruta + '}';
     }
     
+    public void setDatos( ){
+
+        this.descripcion = utilidades.Utilidades.introducirCadena("introduce una descripcion");
+        this.nivel = (Dificultad.valueOf(utilidades.Utilidades.introducirCadena("Introduce la dificultad")));
+        this.disponible = utilidades.Utilidades.leerRespuesta("Esta disponible ?");    
+        this.ruta = utilidades.Utilidades.introducirCadena("introduce la ruta");
+    }
     
 }
