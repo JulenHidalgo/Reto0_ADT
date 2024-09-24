@@ -6,6 +6,7 @@
 package controlador;
 
 import java.util.List;
+import java.util.Map;
 import modelo.ConvocatoriaExamen;
 import modelo.Enunciado;
 import modelo.UnidadDidactica;
