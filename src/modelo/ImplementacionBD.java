@@ -99,7 +99,12 @@ public class ImplementacionBD implements IDao {
             declaracion = conexion.prepareStatement(ALTA_CONVOCATORIA_EXAMEN);
             declaracion.setString(1, conv.getConvocatoria());
             declaracion.setString(2, conv.getDescripcion());
-            declaracion.setDate(3, (Date) conv.getFecha());
+            java.util.Date utilDate = conv.getFecha();
+            if (utilDate != null) {
+                declaracion.setDate(3, new java.sql.Date(utilDate.getTime()));
+            } else {
+                declaracion.setNull(3, java.sql.Types.DATE); // Manejo de nulos si es necesario
+            }
             declaracion.setString(4, conv.getCurso());
 
             declaracion.execute();
@@ -155,24 +160,25 @@ public class ImplementacionBD implements IDao {
     }
 
     @Override
-    public List<UnidadDidactica> getUnidades() {
+    public Map<Integer, UnidadDidactica> getUnidades() {
         ResultSet resultado;
-        List<UnidadDidactica> unidades = new ArrayList<>();
+        Map<Integer, UnidadDidactica> unidades = new HashMap<>();
+        
         UnidadDidactica unidad;
 
         try {
             openConnection();
             declaracion = conexion.prepareStatement(SELECT_UNIDADES);
             resultado = declaracion.executeQuery();
-            while (resultado.next()) {
-                resultado.next();
+            if (resultado.next()) {
+
                 unidad = new UnidadDidactica();
-                unidad.setId(Integer.parseInt(resultado.getString("id")));
+                unidad.setId(resultado.getInt("id"));
                 unidad.setAcronimo(resultado.getString("acronimo"));
                 unidad.setTitulo(resultado.getString("titulo"));
                 unidad.setEvaluacion(resultado.getString("evaluacion"));
                 unidad.setDescripcion(resultado.getString("descripcion"));
-                unidades.add(unidad);
+                unidades.put(unidad.getId(), unidad);
             }
 
         } catch (SQLException ex) {

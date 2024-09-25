@@ -136,7 +136,7 @@ public class Main {
     private static void crearEnunciado(IDao dao) {
         ArrayList<Integer> ids = new ArrayList<>();
         Enunciado enunciado = new Enunciado();
-        Map<Integer, UnidadDidactica> unDidacticas = new HashMap<>();
+        Map<Integer, UnidadDidactica> unDidacticas = dao.getUnidades();
         if (unDidacticas.isEmpty()) {
             System.out.println("no existen unidades didacticas  con ese id");
         } else {
