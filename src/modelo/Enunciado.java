@@ -25,11 +25,11 @@ public class Enunciado {
         this.id = id;
     }
 
-    public String getdescripcion() {
+    public String getDescripcion() {
         return descripcion;
     }
 
-    public void setdescripcion(String descripcion) {
+    public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 

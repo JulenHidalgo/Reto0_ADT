@@ -11,6 +11,7 @@ import java.util.Map;
 import modelo.UnidadDidactica;
 import modelo.ConvocatoriaExamen;
 import modelo.Enunciado;
+import modelo.ImplementacionBD;
 
 /**
  *
@@ -179,7 +180,7 @@ public class Main {
 
     private static void asignarConvocatoriaEnunciado(IDao dao) {
         Map<Integer, Enunciado> enunciados = dao.getEnunciados();
-        ArrayList<ConvocatoriaExamen> convocatorias = (ArrayList<ConvocatoriaExamen>) dao.getConvocatorias();
+        ArrayList<ConvocatoriaExamen> convocatorias = (ArrayList<ConvocatoriaExamen>) dao.getConvocatoriasSinEnunciado();
         if (enunciados.isEmpty() || convocatorias.isEmpty()) {
             System.out.println("no hay ningun enunciado o convocatoria");
         } else {

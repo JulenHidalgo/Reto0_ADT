@@ -27,7 +27,7 @@ public interface IDao {
     
     public List<UnidadDidactica> getUnidades();
     
-    public List<Enunciado> getEnunciados();
+    public Map<Integer, Enunciado> getEnunciados();
     
     public List<Enunciado> getEnunciadosUnidad(Integer idUnidad);
     
