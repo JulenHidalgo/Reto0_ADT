@@ -13,7 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -183,9 +185,9 @@ public class ImplementacionBD implements IDao {
     }
 
     @Override
-    public List<Enunciado> getEnunciados() {
+    public Map<Integer, Enunciado> getEnunciados() {
         ResultSet resultado;
-        List<Enunciado> enunciados = new ArrayList<>();
+        Map<Integer, Enunciado> enunciados = new HashMap<>();
         Enunciado enunciado;
 
         try {
@@ -197,9 +199,9 @@ public class ImplementacionBD implements IDao {
                 enunciado = new Enunciado();
                 enunciado.setId(Integer.parseInt(resultado.getString("id")));
                 enunciado.setDescripcion(resultado.getString("descripcion"));
-                enunciado.setNivel(resultado.getString("nivel"));
+                enunciado.setNivel(Dificultad.valueOf(resultado.getString("nivel")));
                 enunciado.setDisponible(resultado.getBoolean("disponible"));
-                enunciados.add(enunciado);
+                enunciados.put(enunciado.getId(),enunciado);
             }
 
         } catch (SQLException ex) {
@@ -226,7 +228,7 @@ public class ImplementacionBD implements IDao {
                 enunciado = new Enunciado();
                 enunciado.setId(Integer.parseInt(resultado.getString("id")));
                 enunciado.setDescripcion(resultado.getString("descripcion"));
-                enunciado.setNivel(resultado.getString("nivel"));
+                enunciado.setNivel(Dificultad.valueOf(resultado.getString("nivel")));
                 enunciado.setDisponible(resultado.getBoolean("disponible"));
                 enunciados.add(enunciado);
             }
