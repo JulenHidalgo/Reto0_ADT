@@ -1,7 +1,10 @@
+-- Borrado de la BD
+DROP DATABASE examendb;
+-- Creacion de la BD
 CREATE DATABASE examendb;
-
+-- Le dice al sistema que tiene que usar la BD
 USE examendb;
-
+-- Creacion de tablas
 CREATE TABLE UnidadDidactica(
 id Integer AUTO_INCREMENT primary key,
 acronimo varchar(20),
@@ -32,3 +35,31 @@ primary key(id_unidad, id_enunciado),
 foreign key (id_unidad) references UnidadDidactica(id) on delete cascade,
 foreign key (id_enunciado) references Enunciado(id) on delete cascade
 );
+-- Insercion de datos
+INSERT INTO UnidadDidactica (acronimo, titulo, evaluacion, descripcion) VALUES 
+('UD1', 'Matemáticas', 'Final', 'Unidad de álgebra básica'),
+('UD2', 'Historia', 'Continua', 'Estudio de la historia moderna'),
+('UD3', 'Física', 'Final', 'Mecánica clásica introductoria'),
+('UD4', 'Química', 'Continua', 'Conceptos fundamentales de la química'),
+('UD5', 'Biología', 'Final', 'Estructura y función celular');
+
+INSERT INTO Enunciado (descripcion, nivel, disponible) VALUES 
+('Resolver una ecuación cuadrática', 'ALTA', true),
+('Describir la Revolución Francesa', 'MEDIA', true),
+('Explicar la ley de Newton', 'BAJA', false),
+('Balancear una reacción química', 'ALTA', true),
+('Identificar partes de una célula', 'MEDIA', false);
+
+INSERT INTO ConvocatoriaExamen (convocatoria, descripcion, fecha, curso, id) VALUES 
+('Conv2023-01', 'Convocatoria enero 2023', '2023-01-15', 'Matemáticas', 1),
+('Conv2023-02', 'Convocatoria febrero 2023', '2023-02-20', 'Historia', 2),
+('Conv2023-03', 'Convocatoria marzo 2023', '2023-03-30', 'Física', 3),
+('Conv2023-04', 'Convocatoria abril 2023', '2023-04-25', 'Química', 4),
+('Conv2023-05', 'Convocatoria mayo 2023', '2023-05-10', 'Biología', 5);
+
+INSERT INTO UnidadEnunciado (id_unidad, id_enunciado) VALUES 
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5);
