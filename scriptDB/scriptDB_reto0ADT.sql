@@ -16,7 +16,8 @@ CREATE TABLE Enunciado(
 id Integer AUTO_INCREMENT primary key,
 descripcion varchar(100),
 nivel enum("ALTA","MEDIA","BAJA"),
-disponible boolean
+disponible boolean,
+ruta Varchar(70)
 );
 
 CREATE TABLE ConvocatoriaExamen(
@@ -43,12 +44,12 @@ INSERT INTO UnidadDidactica (acronimo, titulo, evaluacion, descripcion) VALUES
 ('UD4', 'Química', 'Continua', 'Conceptos fundamentales de la química'),
 ('UD5', 'Biología', 'Final', 'Estructura y función celular');
 
-INSERT INTO Enunciado (descripcion, nivel, disponible) VALUES 
-('Resolver una ecuación cuadrática', 'ALTA', true),
-('Describir la Revolución Francesa', 'MEDIA', true),
-('Explicar la ley de Newton', 'BAJA', false),
-('Balancear una reacción química', 'ALTA', true),
-('Identificar partes de una célula', 'MEDIA', false);
+INSERT INTO Enunciado (descripcion, nivel, disponible, ruta) VALUES 
+('Resolver una ecuación cuadrática', 'ALTA', true, "../enunciados/Enunciado1.txt"),
+('Describir la Revolución Francesa', 'MEDIA', true, "../enunciados/Enunciado2.txt"),
+('Explicar la ley de Newton', 'BAJA', false, "../enunciados/Enunciado3.txt"),
+('Balancear una reacción química', 'ALTA', true, "../enunciados/Enunciado4.txt"),
+('Identificar partes de una célula', 'MEDIA', false, "../enunciados/Enunciado5.txt");
 
 INSERT INTO ConvocatoriaExamen (convocatoria, descripcion, fecha, curso, id) VALUES 
 ('Conv2023-01', 'Convocatoria enero 2023', '2023-01-15', 'Matemáticas', 1),

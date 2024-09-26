@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +42,9 @@ public class Main {
                     menuVisualizar(dao);
                     break;
                 case 3:
-                    asignarConvocatoriaEnunciado(dao);
+                    asignarConvocatoriaEnunciado(dao, null);
+                    break;
+                case 4:
                     break;
                 default:
                     System.out.println("Esa opcion no existe");
@@ -80,7 +83,8 @@ public class Main {
         int opcion;
         System.out.println("1. VISUALIZAR UN ENUNCIADO POR LA UNIDAD DIDACTICA");
         System.out.println("2. VISUALIZAR CONVOCATORIO POR EL ENUNCIADO");
-        System.out.println("3. ATRAS");
+        System.out.println("3. VISUALIZAR EL ARCHIVO DEL ENUNCIADO");
+        System.out.println("4. ATRAS");
         opcion = utilidades.Utilidades.leerInt("Introduce una opcion");
         switch (opcion) {
             case 1:
@@ -90,6 +94,9 @@ public class Main {
                 mostrarConvocatoria(dao);
                 break;
             case 3:
+                abrirEnunciado(dao);
+                break;
+            case 4:
                 break;
             default:
                 System.out.println("No existe esa opcion");
@@ -125,7 +132,7 @@ public class Main {
             if (enunciados.containsKey(id)) {
                 convocatorias = (ArrayList<ConvocatoriaExamen>) dao.getConvocatoriasEnunciado(id);
                 for (ConvocatoriaExamen con : convocatorias) {
-                    System.out.println(con.toString()); 
+                    System.out.println(con.toString());
                 }
             } else {
                 System.out.println("no existen enunciados con ese id");
@@ -134,7 +141,7 @@ public class Main {
     }
 
     private static void crearEnunciado(IDao dao) {
-        
+
         ArrayList<Integer> ids = new ArrayList<>();
         Enunciado enunciado = new Enunciado();
         Map<Integer, UnidadDidactica> unDidacticas = dao.getUnidades();
@@ -144,7 +151,7 @@ public class Main {
             do {
                 System.out.println("Estas son las  unidades didacticas para que escogas");
                 for (UnidadDidactica und : unDidacticas.values()) {
-                    System.out.println(" "+und.toString());
+                    System.out.println(" " + und.toString());
                 }
                 Integer idUn = utilidades.Utilidades.leerInt("Escoge un id de la unidad didactica");
                 ids.add(idUn);
@@ -154,7 +161,8 @@ public class Main {
             enunciado.setDatos();
             dao.altaEnunciado(enunciado);
             Map<Integer, Enunciado> enunciados = dao.getEnunciados();
-            dao.altaUnidadEnunciado(ids,dao.getUltimoId());
+            dao.altaUnidadEnunciado(ids, dao.getUltimoId());
+            asignarConvocatoriaEnunciado(dao, dao.getUltimoId());
         }
     }
 
@@ -166,11 +174,11 @@ public class Main {
         } else {
             System.out.println("Estas son las  unidades didacticas para que escogas");
             for (UnidadDidactica und : unDidacticas.values()) {
-                System.out.println(und.toString()); 
+                System.out.println(und.toString());
             }
             Integer idUn = utilidades.Utilidades.leerInt("Escoge un id de la unidad didactica");
             ArrayList<Enunciado> enunciados = (ArrayList<Enunciado>) dao.getEnunciadosUnidad(idUn);
-            
+
             for (Enunciado en : enunciados) {
                 System.out.println(en.toString());
             }
@@ -178,28 +186,66 @@ public class Main {
 
     }
 
-    private static void asignarConvocatoriaEnunciado(IDao dao) {
+    private static void asignarConvocatoriaEnunciado(IDao dao, Integer idEnunciado) {
         Map<Integer, Enunciado> enunciados = dao.getEnunciados();
         ArrayList<ConvocatoriaExamen> convocatorias = (ArrayList<ConvocatoriaExamen>) dao.getConvocatoriasSinEnunciado();
-        if (enunciados.isEmpty() || convocatorias.isEmpty()) {
-            System.out.println("no hay ningun enunciado o convocatoria");
-        } else {
-            
-            System.out.println("Estas son las convocatorias");
-            for (ConvocatoriaExamen con : convocatorias) {
-                System.out.println(con.toString());
-            }
+        if (idEnunciado == null) {
+            if (enunciados.isEmpty() || convocatorias.isEmpty()) {
+                System.out.println("no hay ningun enunciado o convocatoria");
+            } else {
 
-            String convocatoria = utilidades.Utilidades.introducirCadena("Introduce una convocatoria");
-            
+                System.out.println("Estas son las convocatorias");
+                for (ConvocatoriaExamen con : convocatorias) {
+                    System.out.println(con.toString());
+                }
+
+                String convocatoria = utilidades.Utilidades.introducirCadena("Introduce una convocatoria");
+
+                System.out.println("Estos son los enunciados que hay ");
+                for (Enunciado en : enunciados.values()) {
+                    System.out.println(en.toString());
+                }
+                Integer id = utilidades.Utilidades.leerInt("Introduce el id de un enunciado");
+
+                dao.putEnunciadoInConvocatoria(id, convocatoria);
+            }
+        } else {
+            if (!convocatorias.isEmpty()) {
+                System.out.println("Estas son las convocatorias");
+                for (ConvocatoriaExamen con : convocatorias) {
+                    System.out.println(con.toString());
+                }
+
+                String convocatoria = utilidades.Utilidades.introducirCadena("Introduce una convocatoria");
+                dao.putEnunciadoInConvocatoria(idEnunciado, convocatoria);
+            } else {
+                System.out.println("no hay ninguna convocatoria");
+            }
+        }
+
+    }
+
+    private static void abrirEnunciado(IDao dao) {
+        Map<Integer, Enunciado> enunciados = new HashMap<>();
+        Integer id;
+        String ruta;
+        
+        enunciados = dao.getEnunciados();
+        if (enunciados.isEmpty()) {
+            System.out.println("no hay ningun enunciados");
+        } else {
             System.out.println("Estos son los enunciados que hay ");
             for (Enunciado en : enunciados.values()) {
                 System.out.println(en.toString());
             }
-            Integer id = utilidades.Utilidades.leerInt("Introduce el id de un enunciado");
+            id = utilidades.Utilidades.leerInt("introduce el id de un enunciado");
+            
+            ruta = enunciados.get(id).getRuta();
+            
+            ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "start", ruta);
+            processBuilder.directory(new File(System.getProperty("user.dir")));
 
-            dao.putEnunciadoInConvocatoria(id, convocatoria);
         }
-    }
 
+    }
 }
