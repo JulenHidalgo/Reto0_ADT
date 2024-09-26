@@ -59,14 +59,15 @@ public class Enunciado {
 
     @Override
     public String toString() {
-        return "Enunciado{" + "id=" + id + ", acronimo=" + descripcion+ ", nivel=" + nivel + ", disponible=" + disponible + '}';
+        return "Enunciado{" + "id=" + id + ", acronimo=" + descripcion+ ", nivel=" + nivel + ", disponible=" + disponible + ", ruta=" + ruta + '}';
     }
     
     public void setDatos( ){
 
         this.descripcion = utilidades.Utilidades.introducirCadena("introduce una descripcion");
         this.nivel = (Dificultad.valueOf(utilidades.Utilidades.introducirCadena("Introduce la dificultad")));
-        this.disponible = utilidades.Utilidades.leerRespuesta("Esta disponible ?");    
+        this.disponible = utilidades.Utilidades.leerRespuesta("Esta disponible?");    
+        this.ruta = utilidades.Utilidades.introducirCadena("Introduce la ruta del archivo"); 
         
     }
     

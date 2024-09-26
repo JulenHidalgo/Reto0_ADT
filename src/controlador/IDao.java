@@ -28,6 +28,7 @@ public interface IDao {
     public Integer getUltimoId();
     
     public Map<Integer, UnidadDidactica> getUnidades();
+    
     public Map<Integer, Enunciado> getEnunciados();
     
     public List<Enunciado> getEnunciadosUnidad(Integer idUnidad);
