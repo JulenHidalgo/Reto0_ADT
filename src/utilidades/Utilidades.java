@@ -163,17 +163,17 @@ public class Utilidades {
     public static Date pidoFechaDMA(String message) {
         boolean hay;
         Date fecha = null;
-        Integer año, mes, dia;
+        Integer aÃ±o, mes, dia;
         Calendar calendario = Calendar.getInstance();
         //parseador
         DateTimeFormatter formateador = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         do {
             hay = true;
-            año = Utilidades.leerInt("Introduce el año");
+            aÃ±o = Utilidades.leerInt("Introduce el aÃ±o");
             mes = Utilidades.leerInt("Introduce el mes");
             dia = Utilidades.leerInt("Introduce el dia");
             try {
-                calendario.set(Calendar.YEAR, año);
+                calendario.set(Calendar.YEAR, aÃ±o);
                 calendario.set(Calendar.MONTH, mes - 1);  // Restamos 1 al mes
                 calendario.set(Calendar.DAY_OF_MONTH, dia);
                 fecha = calendario.getTime();
