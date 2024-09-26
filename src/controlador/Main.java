@@ -6,9 +6,12 @@
 package controlador;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import modelo.UnidadDidactica;
 import modelo.ConvocatoriaExamen;
 import modelo.Enunciado;
@@ -242,8 +245,13 @@ public class Main {
             
             ruta = enunciados.get(id).getRuta();
             
-            ProcessBuilder processBuilder = new ProcessBuilder("cmd", "/c", "start", ruta);
-            processBuilder.directory(new File(System.getProperty("user.dir")));
+            ProcessBuilder processBuilder = new ProcessBuilder("Notepad.exe",ruta);
+            try {
+                processBuilder.start();
+                        
+                        } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
 
