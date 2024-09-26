@@ -119,13 +119,13 @@ public class Main {
         } else {
             System.out.println("Estos son los enunciados que hay ");
             for (Enunciado en : enunciados.values()) {
-                en.toString();
+                System.out.println(en.toString());
             }
             Integer id = utilidades.Utilidades.leerInt("introduce el id de un enunciado");
             if (enunciados.containsKey(id)) {
                 convocatorias = (ArrayList<ConvocatoriaExamen>) dao.getConvocatoriasEnunciado(id);
                 for (ConvocatoriaExamen con : convocatorias) {
-                    con.toString();
+                    System.out.println(con.toString()); 
                 }
             } else {
                 System.out.println("no existen enunciados con ese id");
@@ -134,6 +134,7 @@ public class Main {
     }
 
     private static void crearEnunciado(IDao dao) {
+        
         ArrayList<Integer> ids = new ArrayList<>();
         Enunciado enunciado = new Enunciado();
         Map<Integer, UnidadDidactica> unDidacticas = dao.getUnidades();
@@ -143,7 +144,7 @@ public class Main {
             do {
                 System.out.println("Estas son las  unidades didacticas para que escogas");
                 for (UnidadDidactica und : unDidacticas.values()) {
-                    und.toString();
+                    System.out.println(" "+und.toString());
                 }
                 Integer idUn = utilidades.Utilidades.leerInt("Escoge un id de la unidad didactica");
                 ids.add(idUn);
@@ -152,27 +153,26 @@ public class Main {
             System.out.println("Introduce el enunciado");
             enunciado.setDatos();
             dao.altaEnunciado(enunciado);
-
+            Map<Integer, Enunciado> enunciados = dao.getEnunciados();
+            dao.altaUnidadEnunciado(ids,dao.getUltimoId());
         }
-
     }
 
     private static void mostrarEnunciado(IDao dao) {
-        Map<Integer, UnidadDidactica> unDidacticas = new HashMap<>();
+        Map<Integer, UnidadDidactica> unDidacticas = dao.getUnidades();
 
         if (unDidacticas.isEmpty()) {
             System.out.println("no existen unidades didacticas");
         } else {
             System.out.println("Estas son las  unidades didacticas para que escogas");
             for (UnidadDidactica und : unDidacticas.values()) {
-                und.toString();
+                System.out.println(und.toString()); 
             }
             Integer idUn = utilidades.Utilidades.leerInt("Escoge un id de la unidad didactica");
-            Map<Integer, Enunciado> enunciados = new HashMap<>();
-            enunciados = dao.getEnunciados();
-
-            for (Enunciado en : enunciados.values()) {
-                en.toString();
+            ArrayList<Enunciado> enunciados = (ArrayList<Enunciado>) dao.getEnunciadosUnidad(idUn);
+            
+            for (Enunciado en : enunciados) {
+                System.out.println(en.toString());
             }
         }
 
@@ -184,18 +184,21 @@ public class Main {
         if (enunciados.isEmpty() || convocatorias.isEmpty()) {
             System.out.println("no hay ningun enunciado o convocatoria");
         } else {
-            System.out.println("Estos son los enunciados que hay ");
-            for (Enunciado en : enunciados.values()) {
-                en.toString();
-            }
-            Integer id = utilidades.Utilidades.leerInt("Introduce el id de un enunciado");
-
+            
             System.out.println("Estas son las convocatorias");
             for (ConvocatoriaExamen con : convocatorias) {
-                con.toString();
+                System.out.println(con.toString());
             }
 
             String convocatoria = utilidades.Utilidades.introducirCadena("Introduce una convocatoria");
+            
+            System.out.println("Estos son los enunciados que hay ");
+            for (Enunciado en : enunciados.values()) {
+                System.out.println(en.toString());
+            }
+            Integer id = utilidades.Utilidades.leerInt("Introduce el id de un enunciado");
+
+            dao.putEnunciadoInConvocatoria(id, convocatoria);
         }
     }
 

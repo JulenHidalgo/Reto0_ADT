@@ -72,6 +72,7 @@ public class ConvocatoriaExamen {
         this.descripcion = utilidades.Utilidades.introducirCadena("introduce una descripcion");
         this.fecha = utilidades.Utilidades.pidoFechaDMA("introduce la fecha");
         this.curso = utilidades.Utilidades.introducirCadena("introduce el curso");
+        this.id=null;
     }
 
     

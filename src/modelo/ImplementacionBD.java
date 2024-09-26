@@ -38,10 +38,11 @@ public class ImplementacionBD implements IDao {
     private final String ALTA_ENUNCIADO = "INSERT INTO Enunciado (descripcion, nivel, disponible) VALUES (?,?,?)";
     private final String ALTA_UNIDAD_ENUNCIADO = "INSERT INTO UnidadEnunciado (id_unidad, id_enunciado) VALUES (?,?)";
     private final String SELECT_UNIDADES = "SELECT * FROM UnidadDidactica";
-    private final String SELECT_ENUNCIADOS = "SELECT * FROM Enunciados";
-    private final String SELECT_ENUNCIADOS_UNIDAD = "SELECT * FROM Enunciado WHERE id = (SELECT id_enunciado FROM UnidadEnunciado WHERE id_unidad = ? )";
+    private final String SELECT_ENUNCIADOS = "SELECT * FROM Enunciado";
+    private final String SELECT_ID_ULTIMO_ENUNCIADO = "SELECT id FROM Enunciado ORDER BY id DESC LIMIT 1";
+    private final String SELECT_ENUNCIADOS_UNIDAD = "SELECT * FROM Enunciado WHERE id in (SELECT id_enunciado FROM UnidadEnunciado WHERE id_unidad = ? )";
     private final String SELECT_CONVOCATORIAS_ENUNCIADO = "SELECT * FROM ConvocatoriaExamen WHERE id = ?";
-    private final String SELECT_CONVOCATORIAS_SIN_ENUNCIADO = "SELECT * FROM ConvocatoriaExamen WHERE id = null";
+    private final String SELECT_CONVOCATORIAS_SIN_ENUNCIADO = "SELECT * FROM ConvocatoriaExamen WHERE id is null";
     private final String PUT_ENUNCIADO_IN_CONVOCATORIA = "UPDATE ConvocatoriaExamen SET id = ? WHERE Convocatoria = ?";
 
     public ImplementacionBD() {
@@ -145,9 +146,8 @@ public class ImplementacionBD implements IDao {
             for (Integer i : idUnidade) {
 
                 declaracion = conexion.prepareStatement(ALTA_UNIDAD_ENUNCIADO);
-                declaracion.setString(1, i.toString());
-                declaracion.setString(2, idEnunciado.toString());
-
+                declaracion.setInt(1, i);
+                declaracion.setInt(2, idEnunciado);
                 declaracion.execute();
             }
 
@@ -170,7 +170,7 @@ public class ImplementacionBD implements IDao {
             openConnection();
             declaracion = conexion.prepareStatement(SELECT_UNIDADES);
             resultado = declaracion.executeQuery();
-            if (resultado.next()) {
+            while (resultado.next()) {
 
                 unidad = new UnidadDidactica();
                 unidad.setId(resultado.getInt("id"));
@@ -201,7 +201,7 @@ public class ImplementacionBD implements IDao {
             declaracion = conexion.prepareStatement(SELECT_ENUNCIADOS);
             resultado = declaracion.executeQuery();
             while (resultado.next()) {
-                resultado.next();
+                //resultado.next();
                 enunciado = new Enunciado();
                 enunciado.setId(Integer.parseInt(resultado.getString("id")));
                 enunciado.setDescripcion(resultado.getString("descripcion"));
@@ -230,7 +230,7 @@ public class ImplementacionBD implements IDao {
             declaracion.setInt(1, idUnidad);
             resultado = declaracion.executeQuery();
             while (resultado.next()) {
-                resultado.next();
+                
                 enunciado = new Enunciado();
                 enunciado.setId(Integer.parseInt(resultado.getString("id")));
                 enunciado.setDescripcion(resultado.getString("descripcion"));
@@ -259,7 +259,7 @@ public class ImplementacionBD implements IDao {
             declaracion.setInt(1, enunciado);
             resultado = declaracion.executeQuery();
             while (resultado.next()) {
-                resultado.next();
+                //resultado.next();
                 convocatoria = new ConvocatoriaExamen();
                 convocatoria.setConvocatoria(resultado.getString("convocatoria"));
                 convocatoria.setDescripcion(resultado.getString("descripcion"));
@@ -287,7 +287,7 @@ public class ImplementacionBD implements IDao {
             declaracion = conexion.prepareStatement(SELECT_CONVOCATORIAS_SIN_ENUNCIADO);
             resultado = declaracion.executeQuery();
             while (resultado.next()) {
-                resultado.next();
+               
                 convocatoria = new ConvocatoriaExamen();
                 convocatoria.setConvocatoria(resultado.getString("convocatoria"));
                 convocatoria.setDescripcion(resultado.getString("descripcion"));
@@ -320,5 +320,26 @@ public class ImplementacionBD implements IDao {
         } finally {
             closeConnection();
         }
+    }
+
+    @Override
+    public Integer getUltimoId() {
+         ResultSet resultado;
+        Integer id = null;
+
+        try {
+            openConnection();
+            declaracion = conexion.prepareStatement(SELECT_ID_ULTIMO_ENUNCIADO);
+            resultado = declaracion.executeQuery();
+            resultado.next();
+            id = resultado.getInt("id");
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ImplementacionBD.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeConnection();
+        }
+
+        return id;
     }
 }
