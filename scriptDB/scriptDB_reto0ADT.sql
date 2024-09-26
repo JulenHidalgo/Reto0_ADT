@@ -3,14 +3,14 @@ CREATE DATABASE examendb;
 USE examendb;
 
 CREATE TABLE UnidadDidactica(
-id Integer primary key,
+id Integer AUTO_INCREMENT primary key,
 acronimo varchar(20),
 titulo varchar(30),
 evaluacion varchar(20),
 descripcion varchar(100));
 
 CREATE TABLE Enunciado(
-id Integer primary key,
+id Integer AUTO_INCREMENT primary key,
 descripcion varchar(100),
 nivel enum("ALTA","MEDIA","BAJA"),
 disponible boolean
