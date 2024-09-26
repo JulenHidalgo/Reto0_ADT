@@ -207,6 +207,7 @@ public class ImplementacionBD implements IDao {
                 enunciado.setDescripcion(resultado.getString("descripcion"));
                 enunciado.setNivel(Dificultad.valueOf(resultado.getString("nivel")));
                 enunciado.setDisponible(resultado.getBoolean("disponible"));
+                enunciado.setRuta(resultado.getString("ruta"));
                 enunciados.put(enunciado.getId(),enunciado);
             }
 
