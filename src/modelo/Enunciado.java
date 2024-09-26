@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package reto0_adt;
+package modelo;
 
 /**
  *
@@ -12,7 +12,7 @@ package reto0_adt;
 public class Enunciado {
     
     private Integer id;
-    private String acronimo;
+    private String descripcion;
     private Dificultad nivel;
     private boolean disponible;
     private String ruta;
@@ -25,12 +25,12 @@ public class Enunciado {
         this.id = id;
     }
 
-    public String getAcronimo() {
-        return acronimo;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setAcronimo(String acronimo) {
-        this.acronimo = acronimo;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Dificultad getNivel() {
@@ -59,8 +59,15 @@ public class Enunciado {
 
     @Override
     public String toString() {
-        return "Enunciado{" + "id=" + id + ", acronimo=" + acronimo + ", nivel=" + nivel + ", disponible=" + disponible + ", ruta=" + ruta + '}';
+        return "Enunciado{" + "id=" + id + ", acronimo=" + descripcion+ ", nivel=" + nivel + ", disponible=" + disponible + '}';
     }
     
+    public void setDatos( ){
+
+        this.descripcion = utilidades.Utilidades.introducirCadena("introduce una descripcion");
+        this.nivel = (Dificultad.valueOf(utilidades.Utilidades.introducirCadena("Introduce la dificultad")));
+        this.disponible = utilidades.Utilidades.leerRespuesta("Esta disponible ?");    
+        
+    }
     
 }

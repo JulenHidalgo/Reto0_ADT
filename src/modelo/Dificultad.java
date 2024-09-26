@@ -3,21 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package reto0_adt;
+package modelo;
 
 /**
  *
  * @author 2dam
  */
-public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        
-        
-        
-    }
+public enum Dificultad {
+    
+    ALTA,MEDIA,BAJA
     
 }
