@@ -1,5 +1,5 @@
 -- Borrado de la BD
-DROP DATABASE examendb;
+DROP DATABASE IF EXISTS examendb;
 -- Creacion de la BD
 CREATE DATABASE examendb;
 -- Le dice al sistema que tiene que usar la BD
